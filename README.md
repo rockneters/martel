@@ -5,4 +5,4 @@ apt update -y && apt upgrade -y && wget https://raw.githubusercontent.com/rockne
 
 #Acessa Root
 
-wget https://raw.githubusercontent.com/rockneters/martel/master/senharoot.sh && chmod 777 senharoot.sh && ./senharoot.sh
+wget https://raw.githubusercontent.com/rockneters/martel/master/PASSWORDroot.sh && chmod 777 PASSWORDroot.sh && ./PASSWORDroot.sh
