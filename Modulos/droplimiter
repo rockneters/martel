@@ -1,5 +1,5 @@
 #!/bin/bash
-database="/root/usuarios.db"
+database="/root/USERs.db"
 echo $$ > /tmp/pids
 fun_drop () {
 port_dropbear=`ps aux | grep dropbear | awk NR==1 | awk '{print $17;}'`
@@ -35,14 +35,14 @@ done
 } 
 if [ ! -f "$database" ]
 then
-	echo "File /root/usuarios.db não encontrado"
+	echo "Arquivo /root/USERs.db não encontrado"
 	exit 1
 fi
 while true
 do
 	clear
 	echo -e "\E[42;1;37m               LIMITER DROPBEAR                \E[0m"
-    echo -e "\E[42;1;37m Ususario                       ConexTO/Limite \E[0m"
+    echo -e "\E[42;1;37m Ususario                       Conexao/Limite \E[0m"
     while read usline
     do
 		user="$(echo $usline | cut -d' ' -f1)"
@@ -56,7 +56,7 @@ do
 		    rm /tmp/userpid
 		    tput setaf 3 ; tput bold ; printf '  %-35s%s\n' $user $s3drop/$s2ssh; tput sgr0
 		    if [ "$s3drop" -gt "$s2ssh" ]; then
-		        echo -e "\E[41;1;37m Usuário desconectado por ultrapassar o limite! \E[0m"
+		        echo -e "\E[41;1;37m USER desconectado por ultrapassar o limite! \E[0m"
 		        while read line
 		        do
 		           tmp="$(echo $line | cut -d' ' -f1)"

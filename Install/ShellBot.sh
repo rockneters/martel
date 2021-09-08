@@ -11,20 +11,20 @@
 # 	CONTATO:			shellscriptx@gmail.com
 #
 #	DESCRIÇÃO:			ShellBot é uma API não-oficial desenvolvida para facilitar a criação de 
-#						bots na plataforma TELEGRAM. Constituída por uma coleção de métodos
+#						bots na plataforma TELEGRAM. Constituída por uma coleção de méSEMUA
 #						e funções que permitem ao desenvolvedor:
 #
 #							* Gerenciar grupos, canais e membros.
 #							* Enviar mensagens, documentos, músicas, contatos e etc.
 #							* Enviar teclados (KeyboardMarkup e InlineKeyboard).
 #							* Obter informações sobre membros, arquivos, grupos e canais.
-#							* Para MOST informações consulte a documentação:
+#							* Para mais informações consulte a documentação:
 #							  
 #							https://github.com/shellscriptx/ShellBot/wiki
 #
-#						O ShellBot mantém o padrão da nomenclatura dos métodos registrados da
-#						API original (Telegram), assim como seus campos e valores. Os métodos
-#						requerem parâmetros e argumentos para a chamada e execução. Parâmetros
+#						O ShellBot mantém o padrão da nomenclatura dos méSEMUA registrados da
+#						API original (Telegram), assim como seus campos e valores. Os méSEMUA
+#						requerem parâmetros e argumentos para a chamada e EKSEKUSI. Parâmetros
 #						obrigatórios retornam uma mensagem de erro caso o argumento seja omitido.
 #					
 #	NOTAS:				Desenvolvida na linguagem Shell Script, utilizando o interpretador de 
@@ -95,25 +95,25 @@ readonly _BOT_SCRIPT_=${0##*/}				# Script
 readonly _CURL_OPT_='--silent --request'	# CURL (opções)
 
 # Erros
-readonly _ERR_TYPE_BOOL_='tipo incompatível: suporta somente "true" ou "false".'
-readonly _ERR_TYPE_INT_='tipo incompatível: suporta somente inteiro.'
-readonly _ERR_TYPE_FLOAT_='tipo incompatível: suporta somente float.'
+readonly _ERR_TYPE_BOOL_='tipo incompatível: suport somente "true" ou "false".'
+readonly _ERR_TYPE_INT_='tipo incompatível: suport somente inteiro.'
+readonly _ERR_TYPE_FLOAT_='tipo incompatível: suport somente float.'
 readonly _ERR_PARAM_REQUIRED_='opção requerida: verique se o(s) parâmetro(s) ou argumento(s) obrigatório(s) estão presente(s).'
 readonly _ERR_TOKEN_UNAUTHORIZED_='não autorizado: verifique se possui permissões para utilizar o token.'
-readonly _ERR_TOKEN_INVALID_='token inválido: verique o número do token e tente novamente.'
+readonly _ERR_TOKEN_tidak valid_='token inválido: verique o número do token e tente novamente.'
 readonly _ERR_BOT_ALREADY_INIT_='ação não permitida: o bot já foi inicializado.'
 readonly _ERR_FILE_NOT_FOUND_='falha ao acessar: não foi possível ler o arquivo.'
 readonly _ERR_DIR_WRITE_DENIED_='permissão negada: não é possível gravar no diretório.'
 readonly _ERR_DIR_NOT_FOUND_='Não foi possível acessar: diretório não encontrado.'
-readonly _ERR_FILE_INVALID_ID_='id inválido: arquivo não encontrado.'
+readonly _ERR_FILE_tidak valid_ID_='id inválido: arquivo não encontrado.'
 readonly _ERR_UNKNOWN_='erro desconhecido: ocorreu uma falha inesperada. Reporte o problema ao desenvolvedor.'
 readonly _ERR_SERVICE_NOT_ROOT_='acesso negado: requer privilégios de root.'
 readonly _ERR_SERVICE_EXISTS_='erro ao criar o serviço: o nome do serviço já existe.'
-readonly _ERR_SERVICE_SYSTEMD_NOT_FOUND_='erro ao ativar: o sistema não possui suporte ao gerenciamento de serviços "systemd".'
-readonly _ERR_SERVICE_USER_NOT_FOUND_='usuário não encontrado: a conta de usuário informada é INVALID.'
-readonly _ERR_VAR_NAME_='variável não encontrada: o identificador é inválido ou não existe.'
-readonly _ERR_FUNCTION_NOT_FOUND_='função não encontrada: o identificador especificado é inválido ou não existe.'
-readonly _ERR_ARG_='argumento inválido: o argumento não é suportado pelo parâmetro especificado.'
+readonly _ERR_SERVICE_SYSTEMD_NOT_FOUND_='erro ao MENGAKTIFKAN: o SISTEM não possui suporte ao gerenciamento de serviços "systemd".'
+readonly _ERR_SERVICE_USER_NOT_FOUND_='USER não encontrado: a conta de USER informada é inválida.'
+readonly _ERR_VAR_NAME_='variável não encontrada: o identificador é inválido ou tidak ada.'
+readonly _ERR_FUNCTION_NOT_FOUND_='função não encontrada: o identificador especificado é inválido ou tidak ada.'
+readonly _ERR_ARG_='argumento inválido: o argumento não é suportdo pelo parâmetro especificado.'
 readonly _ERR_RULE_ALREADY_EXISTS_='falha ao definir: o nome da regra já existe.'
 readonly _ERR_HANDLE_EXISTS_='erro ao registar: já existe um handle vinculado ao callback'
 readonly _ERR_CONNECTION_='falha de conexão: não foi possível estabelecer conexão com o Telegram.'
@@ -254,7 +254,7 @@ CreateLog()
 		[[ ${fbot:=${inline_query_from_is_bot[$i]}} 		]] ||
 		[[ ${fbot:=${chosen_inline_result_from_is_bot[$i]}} ]]
 
-		# Usuário (nome)
+		# USER (nome)
 		[[ ${fname:=${message_from_first_name[$i]}} 				]] ||
 		[[ ${fname:=${edited_message_from_first_name[$i]}}			]] ||
 		[[ ${fname:=${callback_query_from_first_name[$i]}} 			]] ||
@@ -263,7 +263,7 @@ CreateLog()
 		[[ ${fname:=${channel_post_author_signature[$i]}}			]] ||
 		[[ ${fname:=${edited_channel_post_author_signature[$i]}}	]]
 
-		# Usuário (conta)
+		# USER (conta)
 		[[ ${fuser:=${message_from_username[$i]}}				]] ||
 		[[ ${fuser:=${edited_message_from_username[$i]}} 		]] ||
 		[[ ${fuser:=${callback_query_from_username[$i]}} 		]] ||
@@ -444,8 +444,8 @@ MessageError()
 CheckArgType()
 {
 	# CheckArgType recebe os dados da função chamadora e verifica
-	# o dado recebido com o tipo suportado pelo parâmetro.
-	# É retornado '0' para sucesso, caso contrário uma mensagem
+	# o dado recebido com o tipo suportdo pelo parâmetro.
+	# É retornado '0' para BERHASIL, caso contrário uma mensagem
 	# de erro é retornada e o script/thread é finalizado com status '1'.
 	case $1 in
 		user)		id "$3" &>/dev/null						|| MessageError API "$_ERR_SERVICE_USER_NOT_FOUND_" "$2" "$3";;
@@ -454,7 +454,7 @@ CheckArgType()
 		int)		[[ $3 =~ ^-?[0-9]+$ 					]] 	|| MessageError API "$_ERR_TYPE_INT_" "$2" "$3";;
 		float)		[[ $3 =~ ^-?[0-9]+\.[0-9]+$ 			]] 	|| MessageError API "$_ERR_TYPE_FLOAT_" "$2" "$3";;
 		bool)		[[ $3 =~ ^(true|false)$ 				]] 	|| MessageError API "$_ERR_TYPE_BOOL_" "$2" "$3";;
-		token)		[[ $3 =~ ^[0-9]+:[a-zA-Z0-9_-]+$		]] 	|| MessageError API "$_ERR_TOKEN_INVALID_" "$2" "$3";;
+		token)		[[ $3 =~ ^[0-9]+:[a-zA-Z0-9_-]+$		]] 	|| MessageError API "$_ERR_TOKEN_tidak valid_" "$2" "$3";;
 		file)		[[ $3 =~ ^@ && ! -f ${3#@} 				]] 	&& MessageError API "$_ERR_FILE_NOT_FOUND_" "$2" "$3";;
 		return)		[[ $3 == @(json|map|value) 				]] 	|| MessageError API "$_ERR_ARG_" "$2" "$3";;
 		cmd)		[[ $3 =~ ^/[a-zA-Z0-9_]+$ 				]] 	|| MessageError API "$_ERR_ARG_" "$2" "$3";;
@@ -489,7 +489,7 @@ CreateUnitService()
 	
 	((UID == 0)) || MessageError API "$_ERR_SERVICE_NOT_ROOT_"
 
-	# O modo 'service' requer que o sistema de gerenciamento de processos 'systemd'
+	# O MODE 'service' requer que o SISTEM de gerenciamento de processos 'systemd'
 	# esteja presente para que o Unit target seja linkado ao serviço.
 	if ! which systemctl &>/dev/null; then
 		MessageError API "$_ERR_SERVICE_SYSTEMD_NOT_FOUND_"; fi
@@ -522,7 +522,7 @@ _eof
 
 	[[ $? -eq 0 ]] && {	
 		
-		printf '%s foi criado com sucesso !!\n' $service	
+		printf '%s foi criado com BERHASIL !!\n' $service	
 		echo -n "Habilitando..."
  		systemctl enable $service &>/dev/null && echo -e $ok || \
 		{ echo -e $fail; MessageError API; }
@@ -578,13 +578,13 @@ ShellBot.init()
 	    			shift 2
 	   				;;
 	   			-m|--monitor)
-					# Ativa modo monitor
+					# Ativa MODE monitor
 					monitor=true
 	   				shift
 	   				;;
 				-f|--flush)
 					# Define a FLAG flush para o método 'ShellBot.getUpdates'. Se ativada, faz com que
-					# o método obtenha somente as atualizações disponíveis, ignorando a extração dos
+					# o método obtenha somente as PEMBARUAN disponíveis, ignorando a extração dos
 					# objetos JSON e a inicialização das variáveis.
 					flush=true
 					shift
@@ -634,7 +634,7 @@ ShellBot.init()
 	curl -s "$_API_TELEGRAM_" &>- || MessageError API "$_ERR_CONNECTION_"
 
     # Um método simples para testar o token de autenticação do seu bot. 
-    # Não requer parâmetros. Retorna informações básicas sobre o bot em forma de um objeto Usuário.
+    # Não requer parâmetros. Retorna informações básicas sobre o bot em forma de um objeto USER.
     ShellBot.getMe()
     {
     	# Chama o método getMe passando o endereço da API, seguido do nome do método.
@@ -668,7 +668,7 @@ ShellBot.init()
 	declare -gr _SHELLBOT_INIT_=1
 
     # SHELLBOT (FUNÇÕES)
-	# Inicializa as funções para chamadas aos métodos da API do telegram.
+	# Inicializa as funções para chamadas aos méSEMUA da API do telegram.
 	ShellBot.ListUpdates(){ echo ${!update_id[@]}; }
 	ShellBot.TotalUpdates(){ echo ${#update_id[@]}; }
 	ShellBot.OffsetEnd(){ local -i offset=${update_id[@]: -1}; echo $offset; }
@@ -1563,7 +1563,7 @@ ShellBot.init()
 		printf -v __keyboard '%s' "${__keyboard%,}"
 
     	# Constroi a estrutura dos objetos + array keyboard, define os valores e salva as configurações.
-    	# Por padrão todos os valores são 'false' até que seja definido.
+    	# Por padrão SEMUA os valores são 'false' até que seja definido.
 		printf '{"inline_keyboard": [%s]}' "${__keyboard}"
     
 		return $?
@@ -1701,7 +1701,7 @@ ShellBot.init()
 		printf -v __keyboard '%s' "${__keyboard%,}"
 
     	# Constroi a estrutura dos objetos + array keyboard, define os valores e salva as configurações.
-    	# Por padrão todos os valores são 'false' até que seja definido.
+    	# Por padrão SEMUA os valores são 'false' até que seja definido.
 		printf '{"keyboard": [%s], "resize_keyboard": %s, "one_time_keyboard": %s, "selective": %s}'	\
 				"${__keyboard}"																			\
 				"${__resize_keyboard:-false}" 															\
@@ -3285,7 +3285,7 @@ _EOF
     	return $?
     }
     
-    # Utilize essa função para obter as fotos de um determinado usuário.
+    # Utilize essa função para obter as fotos de um determinado USER.
     ShellBot.getUserProfilePhotos()
     {
     	# Variáveis locais 
@@ -3387,7 +3387,7 @@ _EOF
     	return $?
     }		
     
-    # Essa função kicka o usuário do chat ou canal. (somente administradores)
+    # Essa função kicka o USER do chat ou canal. (somente administradores)
     ShellBot.kickChatMember()
     {
     	# Variáveis locais
@@ -3998,10 +3998,10 @@ _EOF
 		file=file$(date +%d%m%Y%H%M%S%N)${ext:-.dat}
 
 		# Executa o download da uri especificada e retorna um objeto json
-		# com as informações do processo. Se tiver sucesso o diretório de
+		# com as informações do processo. Se tiver BERHASIL o diretório de
 		# destino é retornado, caso contrário uma mensagem de erro é apresentada.
 		if wget -qO "$dir/$file" "$uri/$file_path"; then
-			# Sucesso
+			# BERHASIL
 			printf -v jq_obj '{"ok":true,"result":{"file_path":"%s"}}' "$dir/$file"
 		else
 			# Falha
@@ -5644,7 +5644,7 @@ _EOF
 
 			# Extrai os arquivos do conjunto negado. Caso esteja ausente
 			# define a expressão padrão.
-			# Captura os grupos contidos no padrão, separando o
+			# Captura os grupos contidos no padrão, seMENGHENTIKAN
 	   		# operador de negação '!' (se presente) para determinar o 
 			# tratamento de valição do intervalo.
 			#
@@ -5668,7 +5668,7 @@ _EOF
 					MessageError API "'$file' $_ERR_FILE_NOT_FOUND_" "${_BOT_RULES_[$i:name]}" '[-T, --auth_file]'
 				fi
 
-				# Lê os usuários removendo os comentários complementares
+				# Lê os USERs removendo os comentários complementares
 				# e ignora a linha prefixada com hashtag '#'.	
 				while read -r line; do
 					user=${line%%*( )#*}
@@ -5894,7 +5894,7 @@ _EOF
     				shift 2
     				;;
     			--)
-    				# Se não houver MOST parâmetros
+    				# Se não houver mais parâmetros
     				shift 
     				break
     				;;
@@ -5912,18 +5912,18 @@ _EOF
 		# Limpa as variáveis inicializadas.
 		unset $_VAR_INIT_; _VAR_INIT_=
 		
-		# Se há atualizações.
+		# Se há PEMBARUAN.
     	[[ $(jq -r '.result|length' <<< $jq_obj) -eq 0 ]] && return 0
 	
 		# Se o método 'ShellBot.getUpdates' for invocado a partir de um subshell,
-		# as atualizações são retornadas em um estrutura de dados json, o método
+		# as PEMBARUAN são retornadas em um estrutura de dados json, o método
 		# é finalizado e variáveis não são inicializadas.
 		[[ $BASH_SUBSHELL -gt 0 ]] && { echo "$jq_obj"; return 0; }
 
 		if [[ $_BOT_MONITOR_ ]]; then
 			printf -v bar '=%.s' {1..50}
 			printf "$bar\nData: %(%d/%m/%Y %T)T\n"
-			printf 'Script: %s\nBot (nome): %s\nBot (usuario): %s\nBot (id): %s\n' 	\
+			printf 'Script: %s\nBot (nome): %s\nBot (USER): %s\nBot (id): %s\n' 	\
 					"${_BOT_SCRIPT_}" 												\
 					"${_BOT_INFO_[2]}" 												\
 					"${_BOT_INFO_[3]}" 												\
@@ -5968,7 +5968,7 @@ _EOF
    	 	return $?
 	}
    
-	# Bot métodos (somente leitura)
+	# Bot méSEMUA (somente leitura)
 	readonly -f ShellBot.token 								\
 				ShellBot.id 								\
 				ShellBot.username 							\

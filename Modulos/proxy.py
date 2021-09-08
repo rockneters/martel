@@ -3,7 +3,7 @@
 import socket, threading, thread, select, signal, sys, time
 from os import system
 system("clear")
-#conexTO
+#conexao
 IP = '0.0.0.0'
 try:
    PORT = int(sys.argv[1])
@@ -182,12 +182,12 @@ class ConnectionHandler(threading.Thread):
     def doCONNECT(self):
         socs = [self.client, self.target]
         count = 0
-        Error = False
+        error = False
         while True:
             count += 1
             (recv, _, err) = select.select(socs, [], socs, 3)
             if err:
-                Error = True
+                error = True
             if recv:
                 for in_ in recv:
 		    try:
@@ -204,12 +204,12 @@ class ConnectionHandler(threading.Thread):
 			else:
 			    break
 		    except:
-                        Error = True
+                        error = True
                         break
             if count == TIMEOUT:
-                Error = True
+                error = True
 
-            if Error:
+            if error:
                 break
 
 
@@ -217,7 +217,7 @@ class ConnectionHandler(threading.Thread):
 def main(host=IP, port=PORT):
     print "\033[0;34m━"*8,"\033[1;32m PROXY SOCKS","\033[0;34m━"*8,"\n"
     print "\033[1;33mIP:\033[1;32m " + IP
-    print "\033[1;33mPORT:\033[1;32m " + str(PORT) + "\n"
+    print "\033[1;33mport:\033[1;32m " + str(PORT) + "\n"
     print "\033[0;34m━"*10,"\033[1;32m SSHPLUS","\033[0;34m━\033[1;37m"*11,"\n"
     server = Server(IP, PORT)
     server.start()

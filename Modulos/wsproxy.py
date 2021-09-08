@@ -140,7 +140,7 @@ class ConnectionHandler(threading.Thread):
                 self.client.send('HTTP/1.1 400 NoXRealHost!\r\n\r\n')
 
         except Exception as e:
-            self.log += ' - Error: ' + e.strError
+            self.log += ' - error: ' + e.strerror
             self.server.printLog(self.log)
 	    pass
         finally:
@@ -192,12 +192,12 @@ class ConnectionHandler(threading.Thread):
     def doCONNECT(self):
         socs = [self.client, self.target]
         count = 0
-        Error = False
+        error = False
         while True:
             count += 1
             (recv, _, err) = select.select(socs, [], socs, 3)
             if err:
-                Error = True
+                error = True
             if recv:
                 for in_ in recv:
 		    try:
@@ -214,18 +214,18 @@ class ConnectionHandler(threading.Thread):
 			else:
 			    break
 		    except:
-                        Error = True
+                        error = True
                         break
             if count == TIMEOUT:
-                Error = True
+                error = True
 
-            if Error:
+            if error:
                 break
 
 
 def print_usage():
     print 'Use: proxy.py -p <port>'
-    print '       proxy.py -b <ip> -p <porta>'
+    print '       proxy.py -b <ip> -p <port>'
     print '       proxy.py -b 0.0.0.0 -p 22'
 
 def parse_args(argv):
@@ -251,7 +251,7 @@ def main(host=LISTENING_ADDR, port=LISTENING_PORT):
     
     print "\033[0;34m━"*8,"\033[1;32m PROXY WEBSOCKET","\033[0;34m━"*8,"\n"
     print "\033[1;33mIP:\033[1;32m " + LISTENING_ADDR
-    print "\033[1;33mPORT:\033[1;32m " + str(LISTENING_PORT) + "\n"
+    print "\033[1;33mport:\033[1;32m " + str(LISTENING_PORT) + "\n"
     print "\033[0;34m━"*10,"\033[1;32m SSHPLUS","\033[0;34m━\033[1;37m"*11,"\n"
     
     

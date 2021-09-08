@@ -6,7 +6,7 @@
 #	CANAL TELEGRAM:	http://t.me/sshplus
 #====================================================
 clear
-database="/root/usuarios.db"
+database="/root/USERs.db"
 fun_multilogin() {
 	(
 		while read user; do

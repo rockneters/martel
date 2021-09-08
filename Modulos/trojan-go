@@ -31,7 +31,7 @@
 # https://github.com/liberal-boy/tls-shunt-proxy
 # https://www.docker.com/
 # https://github.com/containrrr/watchtower
-# https://github.com/portainer/portainer
+# https://github.com/portiner/portiner
 # https://github.com/wulabing/V2Ray_ws-tls_bash_onekey
 #====================================================
 
@@ -81,29 +81,29 @@ VERSION=$(echo "${VERSION}" | awk -F "[()]" '{print $2}')
 
 check_system() {
     if [[ "${ID}" == "centos" && ${VERSION_ID} -eq 7 ]]; then
-        echo -e "${OK} ${GreenBG} O SYSTEM atual é Centos ${VERSION_ID} ${VERSION} ${Font}"
+        echo -e "${OK} ${GreenBG} O SISTEM atual é Centos ${VERSION_ID} ${VERSION} ${Font}"
         INS="yum -y -q"
     elif [[ "${ID}" == "centos" && ${VERSION_ID} -ge 8 ]]; then
-        echo -e "${OK} ${GreenBG} O SYSTEM atual é Centos ${VERSION_ID} ${VERSION} ${Font}"
+        echo -e "${OK} ${GreenBG} O SISTEM atual é Centos ${VERSION_ID} ${VERSION} ${Font}"
         INS="dnf -y"
     elif [[ "${ID}" == "debian" && ${VERSION_ID} -ge 8 ]]; then
-        echo -e "${OK} ${GreenBG} O SYSTEM atual é Debian ${VERSION_ID} ${VERSION} ${Font}"
+        echo -e "${OK} ${GreenBG} O SISTEM atual é Debian ${VERSION_ID} ${VERSION} ${Font}"
         INS="apt -y -qq"
     elif [[ "${ID}" == "ubuntu" && $(echo "${VERSION_ID}" | cut -d '.' -f1) -ge 16 ]]; then
-        echo -e "${OK} ${GreenBG} O SYSTEM atual é Ubuntu ${VERSION_ID} ${UBUNTU_CODENAME} ${Font}"
+        echo -e "${OK} ${GreenBG} O SISTEM atual é Ubuntu ${VERSION_ID} ${UBUNTU_CODENAME} ${Font}"
         INS="apt -y -qq"
     else
-        echo -e "${Error} ${RedBG} O SYSTEM atual é ${ID} ${VERSION_ID} Não consta da lista de SYSTEMs suportados, a instalação foi intErrormpida ${Font}"
+        echo -e "${Error} ${RedBG} O SISTEM atual é ${ID} ${VERSION_ID} Não consta da DAFTAR SISTEMs suportdos, a instalação foi interrompida ${Font}"
         exit 1
     fi
 }
 
 is_root() {
     if [ 0 == $UID ]; then
-        echo -e "${OK} ${GreenBG} O usuário atual é o usuário root, continue a executar ${Font}"
+        echo -e "${OK} ${GreenBG} O USER atual é o USER root, continue a executar ${Font}"
         sleep 1
     else
-        echo -e "${Error} ${RedBG} O usuário atual não é o usuário root, mude para o usuário root e execute novamente o script ${Font}"
+        echo -e "${Error} ${RedBG} O USER atual não é o USER root, mude para o USER root e execute novamente o script ${Font}"
         exit 1
     fi
 }
@@ -139,15 +139,15 @@ chrony_install() {
     chronyc sourcestats -v
     chronyc tracking -v
     date
-    read -rp "Por favor, confirme se o tempo está correto, a faixa de Error é de ± 3 minutos (Y/N) [Y]: " chrony_install
+    read -rp "Por favor, confirme se o tempo está correto, a faixa de erro é de ± 3 minutos (Y/N) [Y]: " chrony_install
     [[ -z ${chrony_install} ]] && chrony_install="Y"
     case $chrony_install in
     [yY][eE][sS] | [yY])
-        echo -e "${GreenBG} Continue a execução ${Font}"
+        echo -e "${GreenBG} Continue a EKSEKUSI ${Font}"
         sleep 2
         ;;
     *)
-        echo -e "${RedBG} Terminar execução ${Font}"
+        echo -e "${RedBG} Terminar EKSEKUSI ${Font}"
         exit 2
         ;;
     esac
@@ -195,32 +195,32 @@ basic_optimization() {
 
 config_exist_check() {
     if [[ -f "$1" ]]; then
-        echo -e "${OK} ${GreenBG} O File old configuration file is detected and the old file configuration is backed up automatically ${Font}"
+        echo -e "${OK} ${GreenBG} O arquivo de configuração antigo é detectado e o backup da configuração do arquivo antigo é feito automaticamente ${Font}"
         cp "$1" "$1.$(date +%Y%m%d%H)"
-        echo -e "${OK} ${GreenBG} Old configuration backed up ${Font}"
+        echo -e "${OK} ${GreenBG} Foi feito backup da configuração antiga ${Font}"
     fi
 }
 
 domain_port_check() {
     read -rp "Insira a PORT TLS (padrão 443):" tspport
     [[ -z ${tspport} ]] && tspport="443"
-    read -rp "Insira as informações do YOUR nome de domínio (por exemplo, fk.gfw.com):" domain
+    read -rp "Insira as informações do seu nome de domínio (por exemplo, fk.gfw.com):" domain
     domain=$(echo "${domain}" | tr '[:upper:]' '[:lower:]')
     domain_ip=$(ping -q -c 1 -t 1 "${domain}" | grep PING | sed -e "s/).*//" | sed -e "s/.*(//")
-    echo -e "${OK} ${GreenBG} Obtendo informações de IP de rede pública, HOLD pacientemente ${Font}"
+    echo -e "${OK} ${GreenBG} Obtendo informações de IP de rede pública, PROSES pacientemente ${Font}"
     local_ip=$(curl -s https://api64.ipify.org)
     echo -e "IP de resolução de DNS de nome de domínio：${domain_ip}"
     echo -e "本机IP: ${local_ip}"
     sleep 2
     if [[ "${local_ip}" = "${domain_ip}" ]]; then
-        echo -e "${OK} ${GreenBG} O IP de resolução DNS do nome de domínio corresponde TO IP local ${Font}"
+        echo -e "${OK} ${GreenBG} O IP de resolução DNS do nome de domínio corresponde ao IP local ${Font}"
         sleep 2
     else
-        echo -e "${Error} ${RedBG} Certifique-se de que o registro A / AAAA correto seja adicionado TO nome de domínio, caso contrário, não será possível conectar-se normalmente ${Font}"
-        echo -e "${Error} ${RedBG} Se o IP de resolução DNS do nome de domínio não corresponder TO IP da máquina, o aplicativo de certificado SSL falhará. DO YOU WISH TO CONTINUE a instalação?（Y/N）[N]${Font}" && read -r install
+        echo -e "${Error} ${RedBG} Certifique-se de que o registro A / AAAA correto seja adicionado ao nome de domínio, caso contrário, não será possível conectar-se normalmente ${Font}"
+        echo -e "${Error} ${RedBG} Se o IP de resolução DNS do nome de domínio não corresponder ao IP da máquina, o aplicAKTIF de certificado SSL falhará. INGIN MELANJUTKAN a instalação?（Y/N）[N]${Font}" && read -r install
         case $install in
         [yY][eE][sS] | [yY])
-            echo -e "${GreenBG} Continue a instalar ${Font}"
+            echo -e "${GreenBG} Continue a INSTALL ${Font}"
             sleep 2
             ;;
         *)
@@ -264,7 +264,7 @@ service_status_check() {
         if systemctl is-active "$1" &>/dev/null; then
             echo -e "${OK} ${GreenBG} $1 Começou ${Font}"
         else
-            echo -e "${WARN} ${Yellow} Tente reinstalar e reparar $1 e tente novamente ${Font}"
+            echo -e "${WARN} ${Yellow} Tente reINSTALL e reparar $1 e tente novamente ${Font}"
             exit 4
         fi
     fi
@@ -275,7 +275,7 @@ prereqcheck() {
     if [[ -f ${tsp_conf} ]]; then
         service_status_check tls-shunt-proxy
     else
-        echo -e "${Error} ${RedBG} A configuração TLS-Shunt-Proxy está anormal, tente reinstalar ${Font}"
+        echo -e "${Error} ${RedBG} A configuração TLS-Shunt-Proxy está anormal, tente reINSTALL ${Font}"
         exit 4
     fi
 }
@@ -289,15 +289,15 @@ trojan_reset() {
         echo -e "${Error} ${RedBG} A configuração TLS-Shunt-Proxy está anormal e as informações do nome de domínio TLS não podem ser detectadas. Reinstale e tente novamente ${Font}"
         exit 4
     fi
-    read -rp "Por favor, digite a senha (Trojan-Go), ou padrão é aleatório :" tjpasswd
+    read -rp "Por favor, digite a PASSWORD (Trojan-Go), ou padrão é aleatório :" tjpasswd
     [[ -z ${tjpasswd} ]] && tjpasswd=$(head -n 10 /dev/urandom | md5sum | head -c ${random_num})
     echo -e "${OK} ${GreenBG} Trojan-Go 密码: ${tjpasswd} ${Font}"
-    read -rp "WISH habilitar o suporte TO modo WebSocket (Y/N) [N]:" trojan_ws_mode
+    read -rp "INGIN habilitar o suporte ao MODE WebSocket (Y/N) [N]:" trojan_ws_mode
     [[ -z ${trojan_ws_mode} ]] && trojan_ws_mode=false
     case $trojan_ws_mode in
     [yY][eE][sS] | [yY])
         tjwspath="/trojan/$(head -n 10 /dev/urandom | md5sum | head -c ${random_num})/"
-        echo -e "${OK} ${GreenBG} O modo Trojan-Go WebSocket está ACTIVATED, WSPATH: ${tjwspath} ${Font}"
+        echo -e "${OK} ${GreenBG} O MODE Trojan-Go WebSocket está AKTIF, WSPATH: ${tjwspath} ${Font}"
         trojan_ws_mode=true
         ;;
     *)
@@ -334,12 +334,12 @@ EOF
     trojan_sync
     judge "Sincronizar as definições de configuração do Trojan-Go"
     systemctl restart tls-shunt-proxy && service_status_check tls-shunt-proxy
-    judge "Configurações do aplicativo TLS-Shunt-Proxy"
+    judge "Configurações do aplicAKTIF TLS-Shunt-Proxy"
 }
 
 modify_trojan() {
     deployed_status_check
-    echo -e "${WARN} ${Yellow} Modificar a configuração do Trojan-Go redefinirá as informações de configuração do proxy existente, se deve continuar (Y/N) [N]? ${Font}"
+    echo -e "${WARN} ${Yellow} Modificar a configuração do Trojan-Go redefinirá as informações de configuração do proxy existente, se deve MELANJUTKAN (Y/N) [N]? ${Font}"
     read -r modify_confirm
     [[ -z ${modify_confirm} ]] && modify_confirm="No"
     case $modify_confirm in
@@ -378,38 +378,38 @@ trojan_sync() {
 }
 
 v2ray_mode_type() {
-    read -rp "Selecione o tipo de protocolo do modo TCP V2Ray：VMess(M)/VLESS(L)，Pular por padrão，(M/L) [Skip]:" v2ray_tcp_mode
+    read -rp "Selecione o tipo de PROTOKOL do MODE TCP V2Ray：VMess(M)/VLESS(L)，Pular por padrão，(M/L) [Skip]:" v2ray_tcp_mode
     [[ -z ${v2ray_tcp_mode} ]] && v2ray_tcp_mode="none"
     case $v2ray_tcp_mode in
     [mM])
-        echo -e "${GreenBG} Protocolo de modo TCP selecionado VMess ${Font}"
+        echo -e "${GreenBG} PROTOKOL de MODE TCP selecionado VMess ${Font}"
         v2ray_tcp_mode="vmess"
         ;;
     [lL])
-        echo -e "${GreenBG} Protocolo de modo TCP selecionado VLESS ${Font}"
+        echo -e "${GreenBG} PROTOKOL de MODE TCP selecionado VLESS ${Font}"
         v2ray_tcp_mode="vless"
         ;;
     none)
-        echo -e "${GreenBG} Pular implantação do modo TCP ${Font}"
+        echo -e "${GreenBG} Pular implantação do MODE TCP ${Font}"
         v2ray_tcp_mode="none"
         ;;
     *)
         echo -e "${RedBG} Por favor insira a letra correta (M/L) ${Font}"
         ;;
     esac
-    read -rp "Selecione o tipo de protocolo do modo V2Ray WebSocket：VMess(M)/VLESS(L)，Pular por padrão，(M/L) [Skip]:" v2ray_ws_mode
+    read -rp "Selecione o tipo de PROTOKOL do MODE V2Ray WebSocket：VMess(M)/VLESS(L)，Pular por padrão，(M/L) [Skip]:" v2ray_ws_mode
     [[ -z ${v2ray_ws_mode} ]] && v2ray_ws_mode="none"
     case $v2ray_ws_mode in
     [mM])
-        echo -e "${GreenBG} Modo WS selecionado VMess ${Font}"
+        echo -e "${GreenBG} MODE WS selecionado VMess ${Font}"
         v2ray_ws_mode="vmess"
         ;;
     [lL])
-        echo -e "${GreenBG} Modo WS selecionado VLESS ${Font}"
+        echo -e "${GreenBG} MODE WS selecionado VLESS ${Font}"
         v2ray_ws_mode="vless"
         ;;
     none)
-        echo -e "${GreenBG} Pular implantação do modo WS ${Font}"
+        echo -e "${GreenBG} Pular implantação do MODE WS ${Font}"
         v2ray_ws_mode="none"
         ;;
     *)
@@ -479,7 +479,7 @@ EOF
         UUID=$(cat /proc/sys/kernel/random/uuid)
         echo -e "${OK} ${GreenBG} UUID:${UUID} ${Font}"
         v2wspath="/v2ray/$(head -n 10 /dev/urandom | md5sum | head -c ${random_num})/"
-        echo -e "${OK} ${GreenBG} Ligue o modo V2Ray WS，WSPATH: ${v2wspath} ${Font}"
+        echo -e "${OK} ${GreenBG} Ligue o MODE V2Ray WS，WSPATH: ${v2wspath} ${Font}"
         v2wsport=$((RANDOM % 6666 + 30000))
         echo -e "${OK} ${GreenBG} V2Ray WS 监听端口为 ${v2wsport} ${Font}"
         if [[ "${v2ray_ws_mode}" = "vmess" ]]; then
@@ -519,7 +519,7 @@ EOF
         v2ray_sync
         judge "Sincronizar configuração V2Ray"
         systemctl restart tls-shunt-proxy && service_status_check tls-shunt-proxy
-        judge "Configurações do aplicativo TLS-Shunt-Proxy"
+        judge "Configurações do aplicAKTIF TLS-Shunt-Proxy"
     else
         echo -e "${Error} ${RedBG} A configuração TLS-Shunt-Proxy está anormal, reinstale e tente novamente ${Font}"
         exit 4
@@ -528,7 +528,7 @@ EOF
 
 modify_v2ray() {
     deployed_status_check
-    echo -e "${WARN} ${Yellow} Modificar a configuração do V2Ray irá redefinir as informações de configuração do proxy existente, se deve continuar (Y/N) [N]? ${Font}"
+    echo -e "${WARN} ${Yellow} Modificar a configuração do V2Ray irá redefinir as informações de configuração do proxy existente, se deve MELANJUTKAN (Y/N) [N]? ${Font}"
     read -r modify_confirm
     [[ -z ${modify_confirm} ]] && modify_confirm="No"
     case $modify_confirm in
@@ -582,7 +582,7 @@ web_camouflage() {
 }
 
 install_docker() {
-    echo -e "${GreenBG} Comece a instalar a versão MOST recente do Docker ... ${Font}"
+    echo -e "${GreenBG} Comece a INSTALL a versão mais recente do Docker ... ${Font}"
     curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
     sh /tmp/get-docker.sh
     judge "Instale o Docker"
@@ -593,7 +593,7 @@ install_docker() {
 
 install_tsp() {
     bash <(curl -L -s https://raw.githubusercontent.com/liberal-boy/tls-shunt-proxy/master/dist/install.sh)
-    judge "Instalar TLS-Shunt-Proxy"
+    judge "INSTALL TLS-Shunt-Proxy"
     chown -R tls-shunt-proxy:tls-shunt-proxy /etc/ssl/tls-shunt-proxy
     command -v setcap >/dev/null 2>&1 && setcap "cap_net_bind_service=+ep" /usr/local/bin/tls-shunt-proxy
     config_exist_check ${tsp_conf}
@@ -711,10 +711,10 @@ install_watchtower() {
     judge "Instalação do contêiner WatchTower"
 }
 
-install_portainer() {
+install_portiner() {
     docker volume create PORTiner_data
-    docker pull PORTiner/portainer-ce
-    docker run -d -p 9080:9000 --name PORTiner --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v PORTiner_data:/data PORTiner/portainer-ce
+    docker pull PORTiner/portiner-ce
+    docker run -d -p 9080:9000 --name PORTiner --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v PORTiner_data:/data PORTiner/portiner-ce
     judge "Instalação do contêiner PORTiner"
     echo -e "${OK} ${GreenBG} O endereço de gerenciamento do PORTiner é http://$TSP_Domain:9080 Abra você mesmo a PORT do firewall！ ${Font}"
 }
@@ -750,7 +750,7 @@ uninstall_all() {
     check_system
     uninstall_proxy_server
     uninstall_watchtower
-    uninstall_portainer
+    uninstall_portiner
     systemctl stop docker && systemctl disable docker
     if [[ "${ID}" == "centos" ]]; then
         ${INS} remove docker-ce docker-ce-cli containerd.io docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
@@ -760,7 +760,7 @@ uninstall_all() {
     #rm -rf /var/lib/docker #Removes all docker data
     rm -rf /etc/systemd/system/docker.service
     uninstall_tsp
-    echo -e "${OK} ${GreenBG} Todos os componentes foram desinstalados, bem-vindo para usar este script novamente! ${Font}"
+    echo -e "${OK} ${GreenBG} SEMUA os componentes foram desinstalados, bem-vindo para usar este script novamente! ${Font}"
     exit 0
 }
 
@@ -806,7 +806,7 @@ uninstall_watchtower() {
     sleep 3
 }
 
-uninstall_portainer() {
+uninstall_portiner() {
     docker stop PORTiner && docker rm -fv PORTiner && PORTiner_stat="none" &&
         echo -e "${OK} ${GreenBG} Desinstalação do PORTiner concluída！ ${Font}"
     sleep 3
@@ -814,9 +814,9 @@ uninstall_portainer() {
 
 upgrade_tsp() {
     current_version="$(/usr/local/bin/tls-shunt-proxy --version 2>&1 | awk 'NR==1{gsub(/"/,"");print $3}')"
-    echo -e "${GreenBG} Versão atual do TLS-Shunt-Proxy: ${current_version}，Comece a testar a versão MOST recente... ${Font}"
+    echo -e "${GreenBG} Versão atual do TLS-Shunt-Proxy: ${current_version}，Comece a testar a versão mais recente... ${Font}"
     latest_version="$(wget --no-check-certificate -qO- https://api.github.com/repos/liberal-boy/tls-shunt-proxy/tags | grep 'name' | cut -d\" -f4 | head -1)"
-    [[ -z ${latest_version} ]] && echo -e "${Error} Falha TO detectar a versão MOST recente ! ${Font}" && menu
+    [[ -z ${latest_version} ]] && echo -e "${Error} Falha ao detectar a versão mais recente ! ${Font}" && menu
     if [[ ${latest_version} != "${current_version}" ]]; then
         echo -e "${OK} ${GreenBG} Versão Atual: ${current_version} A última versão de: ${latest_version}，Atualizar (Y/N) [N]? ${Font}"
         read -r update_confirm
@@ -833,13 +833,13 @@ upgrade_tsp() {
         *) ;;
         esac
     else
-        echo -e "${OK} ${GreenBG} O TLS-Shunt-Proxy atual é a versão MOST recente ${current_version} ${Font}"
+        echo -e "${OK} ${GreenBG} O TLS-Shunt-Proxy atual é a versão mais recente ${current_version} ${Font}"
     fi
 }
 
 update_sh() {
     command -v curl >/dev/null 2>&1 || ${INS} install curl
-    judge "Instalar pacote de dependência curl"
+    judge "INSTALL pacote de dependência curl"
     ol_version=$(curl -L -s https://raw.githubusercontent.com/h31105/trojan_v2_docker_onekey/${github_branch}/deploy.sh | grep "shell_version=" | head -1 | awk -F '=|"' '{print $3}')
     echo "$ol_version" >$version_cmp
     echo "$shell_version" >>$version_cmp
@@ -857,7 +857,7 @@ update_sh() {
         *) ;;
         esac
     else
-        echo -e "${OK} ${GreenBG} A versão atual é a versão MOST recente ${Font}"
+        echo -e "${OK} ${GreenBG} A versão atual é a versão mais recente ${Font}"
     fi
 }
 
@@ -950,7 +950,7 @@ deployed_status_check() {
                 systemctl is-active "chrony" &>/dev/null || chrony_stat=inactive
             fi
             if [[ $chrony_stat = inactive ]]; then
-                echo -e "${Error} ${RedBG} Foi detectado que o serviço de sincronização de tempo Chrony não foi iniciado. Se a hora do SYSTEM for imprecisa, isso afetará seriamente a disponibilidade do protocolo V2Ray VMess ${Font}\n${WARN} ${Yellow} 当前系统时间: $(date)，请确认时间是否准确，误差范围±3分钟内（Y）或 尝试修复时间同步服务（R）[R]: ${Font}"
+                echo -e "${Error} ${RedBG} Foi detectado que o serviço de sincronização de tempo Chrony não foi iniciado. Se a hora do SISTEM for imprecisa, isso afetará seriamente a disponibilidade do PROTOKOL V2Ray VMess ${Font}\n${WARN} ${Yellow} 当前系统时间: $(date)，请确认时间是否准确，误差范围±3分钟内（Y）或 尝试修复时间同步服务（R）[R]: ${Font}"
                 read -r chrony_confirm
                 [[ -z ${chrony_confirm} ]] && chrony_confirm="R"
                 case $chrony_confirm in
@@ -966,9 +966,9 @@ deployed_status_check() {
     fi
 
     [[ -f ${trojan_conf} || -f ${v2ray_conf} || $trojan_stat = "installed" || $v2ray_stat = "installed" ]] && menu_req_check docker
-    [[ $trojan_stat = "installed" && ! -f $trojan_conf ]] && echo -e "\n${Error} ${RedBG} Foi detectada anormalidade na configuração do proxy Trojan-Go, as seguintes opções serão bloqueadas, tente reinstalar o reparo e tente novamente ... ${Font}" &&
+    [[ $trojan_stat = "installed" && ! -f $trojan_conf ]] && echo -e "\n${Error} ${RedBG} Foi detectada anormalidade na configuração do proxy Trojan-Go, as seguintes opções serão bloqueadas, tente reINSTALL o reparo e tente novamente ... ${Font}" &&
         echo -e "${WARN} ${Yellow}[Shield] Modificação da configuração do Trojan-Go${Font}"
-    [[ $v2ray_stat = "installed" && ! -f $v2ray_conf ]] && echo -e "\n${Error} ${RedBG} Foi detectada anormalidade na configuração do proxy V2Ray, as seguintes opções serão bloqueadas, tente reinstalar e tente novamente... ${Font}" &&
+    [[ $v2ray_stat = "installed" && ! -f $v2ray_conf ]] && echo -e "\n${Error} ${RedBG} Foi detectada anormalidade na configuração do proxy V2Ray, as seguintes opções serão bloqueadas, tente reINSTALL e tente novamente... ${Font}" &&
         echo -e "${WARN} ${Yellow}[Shield] Modificação da configuração V2Ray${Font}"
 
     if [[ $tsp_stat = "installed" && $tsp_template_version != "${tsp_cfg_version}" ]]; then
@@ -988,7 +988,7 @@ deployed_status_check() {
 
     [[ $debug = "enable" ]] && echo -e "\n Proxy Trojan-Go：TCP：${Green}${trojan_tcp_mode}${Font} / WebSocket：${Green}${trojan_ws_mode}${Font}\n     Proxy V2Ray：TCP：${Green}${v2ray_tcp_mode}${Font} / WebSocket：${Green}${v2ray_ws_mode}${Font}" &&
         echo -e "\n Recipiente do agente: Trojan-Go：${Green}${trojan_stat}${Font} / V2Ray：${Green}${v2ray_stat}${Font}" &&
-        echo -e " Outros recipientes: WatchTower：${Green}${watchtower_stat}${Font} / PORTiner：${Green}${portainer_stat}${Font}\n"
+        echo -e " Outros recipientes: WatchTower：${Green}${watchtower_stat}${Font} / PORTiner：${Green}${portiner_stat}${Font}\n"
 }
 
 info_config() {
@@ -997,20 +997,20 @@ info_config() {
     echo -e "\n————————————————————Informações de configuração do shunt————————————————————"
     if [ -f ${tsp_conf} ]; then
         echo -e "TLS-Shunt-Proxy $(/usr/local/bin/tls-shunt-proxy --version 2>&1 | awk 'NR==1{gsub(/"/,"");print $3}')" &&
-            echo -e "Porta TLS do servidor: ${TSP_Port}" && echo -e "Nome de domínio TLS do servidor: ${TSP_Domain}"
-        [[ $trojan_tcp_mode = true ]] && echo -e "Porta de descarregamento de TCP Trojan-Go: $trojan_tcp_port" && echo -e "Porta de escuta Trojan-Go: $tjport"
-        [[ $trojan_ws_mode = true ]] && echo -e "Porta de toque Trojan-Go WebSocket: $trojan_ws_port" &&
+            echo -e "port TLS do Service: ${TSP_Port}" && echo -e "Nome de domínio TLS do Service: ${TSP_Domain}"
+        [[ $trojan_tcp_mode = true ]] && echo -e "port de descarregamento de TCP Trojan-Go: $trojan_tcp_port" && echo -e "port de escuta Trojan-Go: $tjport"
+        [[ $trojan_ws_mode = true ]] && echo -e "port de toque Trojan-Go WebSocket: $trojan_ws_port" &&
             echo -e "Caminho de descarregamento do Trojan-Go WebSocket: $trojan_ws_path"
-        [[ $v2ray_tcp_mode = v*ess ]] && echo -e "Porta shunt V2Ray TCP: $v2ray_tcp_port" && echo -e "Porta de escuta V2Ray TCP: $v2port"
-        [[ $v2ray_ws_mode = v*ess ]] && echo -e "Porta de derivação V2Ray WebSocket: $v2ray_ws_port" && echo -e "Porta de escuta V2Ray WS: $v2wsport" &&
+        [[ $v2ray_tcp_mode = v*ess ]] && echo -e "port shunt V2Ray TCP: $v2ray_tcp_port" && echo -e "port de escuta V2Ray TCP: $v2port"
+        [[ $v2ray_ws_mode = v*ess ]] && echo -e "port de derivação V2Ray WebSocket: $v2ray_ws_port" && echo -e "port de escuta V2Ray WS: $v2wsport" &&
             echo -e "Caminho de shunt V2Ray WebSocket: $v2ray_ws_path"
     fi
 
     if [[ -f ${trojan_conf} && $trojan_stat = "installed" ]]; then
         echo -e "—————————————————— Implantação do Trojan-Go ——————————————————" &&
             echo -e "$(docker exec Trojan-Go sh -c 'trojan-go --version' 2>&1 | awk 'NR==1{gsub(/"/,"");print}')" &&
-            echo -e "Porta do servidor: ${TSP_Port}" && echo -e "Endereço do servidor:: ${TSP_Domain}"
-        [[ $trojan_tcp_mode = true ]] && echo -e "Senha do Trojan-Go: ${tjpassword}"
+            echo -e "port do Service: ${TSP_Port}" && echo -e "Endereço do Service:: ${TSP_Domain}"
+        [[ $trojan_tcp_mode = true ]] && echo -e "PASSWORD do Trojan-Go: ${tjpassword}"
         [[ $trojan_ws_mode = true ]] &&
             echo -e "Trojan-Go WebSocket Path: ${tjwspath}" && echo -e "Trojan-Go WebSocket Host: ${tjwshost}"
     fi
@@ -1018,7 +1018,7 @@ info_config() {
     if [[ -f ${v2ray_conf} && $v2ray_stat = "installed" ]]; then
         echo -e "\n———————————————————— Configuração V2Ray ————————————————————" &&
             echo -e "$(docker exec V2Ray sh -c 'v2ray --version' 2>&1 | awk 'NR==1{gsub(/"/,"");print}')" &&
-            echo -e "Porta do servidor: ${TSP_Port}" && echo -e "Endereço do servidor:: ${TSP_Domain}"
+            echo -e "port do Service: ${TSP_Port}" && echo -e "Endereço do Service:: ${TSP_Domain}"
         [[ $v2ray_tcp_mode = "vmess" ]] && echo -e "\nVMess TCP UUID: ${VMTID}" &&
             echo -e "VMess AlterID: ${VMAID}" && echo -e "Método de criptografia VMess: Auto" && echo -e "VMess Host: ${TSP_Domain}"
         [[ $v2ray_tcp_mode = "vless" ]] && echo -e "\nVLESS TCP UUID: ${VLTID}" &&
@@ -1030,7 +1030,7 @@ info_config() {
     fi
 
     echo -e "————————————————————————————————————————————————————\n"
-    read -t 60 -n 1 -s -rp "Press any key to continue（60s）..."
+    read -t 60 -n 1 -s -rp "Pressione qualquer tecla para MELANJUTKAN（60s）..."
     clear
 }
 
@@ -1053,7 +1053,7 @@ info_links() {
             echo ""
 	    echo -e " ${Yellow}Código QR Shadowrocket：" &&
             qrencode -t ANSIUTF8 -s 1 -m 2 "trojan://${tjpassword}@${TSP_Domain}:${TSP_Port}?peer=${TSP_Domain}&mux=1&plugin=obfs-local;obfs=websocket;obfs-host=${TSP_Domain};obfs-uri=${tjwspath}#${HOSTNAME}-WS"
-        read -t 60 -n 1 -s -rp "Press any key to continue（60s）..."
+        read -t 60 -n 1 -s -rp "Pressione qualquer tecla para MELANJUTKAN（60s）..."
     fi
 
     if [[ -f ${v2ray_conf} && $v2ray_stat = "installed" ]]; then
@@ -1072,7 +1072,7 @@ info_links() {
             echo -e " Novo formato VLESS：\n vless://${VLTID}@${TSP_Domain}:${TSP_Port}?security=tls&sni=${TSP_Domain}#$(urlEncode "${HOSTNAME}-TCP")"
         [[ $v2ray_ws_mode = "vless" ]] && echo -e "\n VLESS WebSocket TLS compartilhar link：" &&
             echo -e " Novo formato VLESS：\n vless://${VLWSID}@${TSP_Domain}:${TSP_Port}?type=ws&security=tls&host=${TSP_Domain}&path=$(urlEncode "${v2wspath}")&sni=${TSP_Domain}#$(urlEncode "${HOSTNAME}-WS")"
-        read -t 60 -n 1 -s -rp "Press any key to continue（60s）..."
+        read -t 60 -n 1 -s -rp "Pressione qualquer tecla para MELANJUTKAN（60s）..."
     fi
 
     if [[ -f ${v2ray_conf} || -f ${trojan_conf} ]]; then
@@ -1084,8 +1084,8 @@ Disallow: /
 EOF
         subscribe_file="$(head -n 10 /dev/urandom | md5sum | head -c ${random_num})"
         subscribe_links | base64 -w 0 >"$(grep '#Website' ${tsp_conf} | sed -r 's/.*: (.*) #.*/\1/')"/subscribe"${subscribe_file}"
-        echo -e "Link Of inscription：\n https://${TSP_Domain}/subscribe${subscribe_file} \n${Yellow}Observação: O link Of inscription gerado pelo script contém todas as informações de configuração do protocolo proxy atualmente implantadas no servidor. Para considerações de segurança da informação, o endereço do link será atualizado aleatoriamente sempre que você visualizá-lo!！\nAlém disso, como diferentes clientes têm diferentes graus de compatibilidade e suporte para o protocolo de proxy, ajuste-se de acordo com a situação real！${Font}"
-        read -t 60 -n 1 -s -rp "Press any key to continue（60s）..."
+        echo -e "Link de inscrição：\n https://${TSP_Domain}/subscribe${subscribe_file} \n${Yellow}Observação: O link de inscrição gerado pelo script contém todas as informações de configuração do PROTOKOL proxy atualmente implantadas no Service. Para considerações de segurança da informação, o endereço do link será atualizado aleatoriamente sempre que você visualizá-lo!！\nAlém disso, como diferentes clientes têm diferentes graus de compatibilidade e suporte para o PROTOKOL de proxy, ajuste-se de acordo com a situação real！${Font}"
+        read -t 60 -n 1 -s -rp "Pressione qualquer tecla para MELANJUTKAN（60s）..."
     fi
 
     clear
@@ -1119,7 +1119,7 @@ cert_stat_check() {
     echo -e "${OK} ${GreenBG} Verifique as informações de status do certificado... ${Font}"
     if systemctl is-active "$1" &>/dev/null; then
         [[ $1 = "tls-shunt-proxy" ]] && [[ ! -f ${tsp_cert_dir}/${TSP_Domain}/${TSP_Domain}.crt || ! -f ${tsp_cert_dir}/${TSP_Domain}/${TSP_Domain}.json || ! -f ${tsp_cert_dir}/${TSP_Domain}/${TSP_Domain}.key ]] &&
-            echo -e "${Yellow}Nenhum certificado SSL válido foi detectado, execute o seguinte comando：\n#systemctl restart tls-shunt-proxy\n#journalctl -u tls-shunt-proxy.service\nVerifique o log e execute novamente o script depois que o aplicativo de certificado for concluído${Font}" && exit 4
+            echo -e "${Yellow}Nenhum certificado SSL válido foi detectado, execute o seguinte comando：\n#systemctl restart tls-shunt-proxy\n#journalctl -u tls-shunt-proxy.service\nVerifique o log e execute novamente o script depois que o aplicAKTIF de certificado for concluído${Font}" && exit 4
     fi
 }
 
@@ -1127,10 +1127,10 @@ menu_req_check() {
     if systemctl is-active "$1" &>/dev/null; then
         [[ $debug = "enable" ]] && echo -e "${OK} ${GreenBG} $1 Começou ${Font}"
     else
-        echo -e "\n${Error} ${RedBG} Foi detectado que o serviço $1 não foi iniciado com SUCCESS. De acordo com a dependência, as seguintes opções serão bloqueadas, corrija e tente novamente... ${Font}"
-        [[ $1 = "tls-shunt-proxy" ]] && echo -e "${Yellow}[Shield] Instalar proxy TCP / WS (Trojan-Go / V2Ray) \nModificação de configuração [Shield] (Trojan-Go / V2Ray) \n[Block] Ver informações de configuração${Font}"
-        [[ $1 = "docker" ]] && echo -e "${Yellow}[Shield] Instalar / desinstalar WatchTower (atualizar automaticamente o contêiner) \n[Shield] Instalar / desinstalar PORTiner（Contêiner de gerenciamento da web）${Font}"
-        read -t 60 -n 1 -s -rp "Press any key to continue（60s）..."
+        echo -e "\n${Error} ${RedBG} Foi detectado que o serviço $1 não foi iniciado com BERHASIL. De acordo com a dependência, as seguintes opções serão bloqueadas, corrija e tente novamente... ${Font}"
+        [[ $1 = "tls-shunt-proxy" ]] && echo -e "${Yellow}[Shield] INSTALL proxy TCP / WS (Trojan-Go / V2Ray) \nModificação de configuração [Shield] (Trojan-Go / V2Ray) \n[Block] Ver informações de configuração${Font}"
+        [[ $1 = "docker" ]] && echo -e "${Yellow}[Shield] INSTALL / desINSTALL WatchTower (atualizar automaticamente o contêiner) \n[Shield] INSTALL / desINSTALL PORTiner（Contêiner de gerenciamento da web）${Font}"
+        read -t 60 -n 1 -s -rp "Pressione qualquer tecla para MELANJUTKAN（60s）..."
     fi
 }
 
@@ -1139,33 +1139,33 @@ menu() {
     echo -e "\n${Green}     Versão do script de implantação TSP e Trojan-Go / V2Ray: ${shell_version} ${Font}"
     echo -e "——————————————————————Gerenciamento de implantação——————————————————————"
     if [[ $tsp_stat = "installed" ]]; then
-        echo -e "${Green}1.${Font}  ${Yellow}Desinstalar${Font} TLS-Shunt-Proxy"
+        echo -e "${Green}1.${Font}  ${Yellow}DesINSTALL${Font} TLS-Shunt-Proxy"
     else
-        echo -e "${Green}1.${Font}  Instalar TLS-Shunt-Proxy（Certificado de gerenciamento de site e automático）"
+        echo -e "${Green}1.${Font}  INSTALL TLS-Shunt-Proxy（Certificado de gerenciamento de site e automático）"
     fi
     systemctl is-active "tls-shunt-proxy" &>/dev/null &&
         if [[ $trojan_stat = "none" ]]; then
-            echo -e "${Green}2.${Font}  Instalar proxy TCP / WS Trojan-Go"
+            echo -e "${Green}2.${Font}  INSTALL proxy TCP / WS Trojan-Go"
         else
-            echo -e "${Green}2.${Font}  ${Yellow}Desinstalar${Font} Proxy Trojan-Go TCP / WS"
+            echo -e "${Green}2.${Font}  ${Yellow}DesINSTALL${Font} Proxy Trojan-Go TCP / WS"
         fi
     systemctl is-active "tls-shunt-proxy" &>/dev/null &&
         if [[ $v2ray_stat = "none" ]]; then
-            echo -e "${Green}3.${Font} Instalar proxy TCP / WS V2Ray"
+            echo -e "${Green}3.${Font} INSTALL proxy TCP / WS V2Ray"
         else
-            echo -e "${Green}3.${Font}  ${Yellow}Desinstalar${Font} Proxy TCP / WS V2Ray"
+            echo -e "${Green}3.${Font}  ${Yellow}DesINSTALL${Font} Proxy TCP / WS V2Ray"
         fi
     systemctl is-active "docker" &>/dev/null &&
         if [[ $watchtower_stat = "none" ]]; then
-            echo -e "${Green}4.${Font}  Instalar WatchTower (atualizar automaticamente o contêiner)"
+            echo -e "${Green}4.${Font}  INSTALL WatchTower (atualizar automaticamente o contêiner)"
         else
-            echo -e "${Green}4.${Font}  ${Yellow}Desinstalar${Font} WatchTower (atualiza automaticamente o contêiner)"
+            echo -e "${Green}4.${Font}  ${Yellow}DesINSTALL${Font} WatchTower (atualiza automaticamente o contêiner)"
         fi
     systemctl is-active "docker" &>/dev/null &&
-        if [[ $portainer_stat = "none" ]]; then
-            echo -e "${Green}5.${Font}  Instalar PORTiner (Web Management Container)"
+        if [[ $portiner_stat = "none" ]]; then
+            echo -e "${Green}5.${Font}  INSTALL PORTiner (Web Management Container)"
         else
-            echo -e "${Green}5.${Font}  ${Yellow}Desinstalar${Font} PORTiner (contêiner de gerenciamento da Web)"
+            echo -e "${Green}5.${Font}  ${Yellow}DesINSTALL${Font} PORTiner (contêiner de gerenciamento da Web)"
         fi
     systemctl is-active "tls-shunt-proxy" &>/dev/null &&
         echo -e "——————————————————————Modificação de configuração——————————————————————" &&
@@ -1179,10 +1179,10 @@ menu() {
         [[ $trojan_stat = "installed" || $v2ray_stat = "installed" ]] && echo -e "${Green}10.${Font} Ver link compartilhar / assinar"
     echo -e "——————————————————————Gestão Diversa——————————————————————"
     [ -f ${tsp_conf} ] && echo -e "${Green}11.${Font} Atualizar plataforma base TLS-Shunt-Proxy / Docker" &&
-        echo -e "${Green}12.${Font} ${Yellow}Desinstalar${Font} Todos os componentes instalados"
+        echo -e "${Green}12.${Font} ${Yellow}DesINSTALL${Font} SEMUA os componentes instalados"
     echo -e "${Green}13.${Font} Instale o script 4 em 1 BBR Rui Su"
     echo -e "${Green}14.${Font} Execute o script de teste SuperSpeed"
-    echo -e "${Green}0.${Font}  EXIT do script "
+    echo -e "${Green}0.${Font}  KELUAR do script "
     echo -e "————————————————————————————————————————————————————\n"
     read -rp "Por favor insira o número：" menu_num
     case "$menu_num" in
@@ -1220,10 +1220,10 @@ menu() {
         ;;
     5)
         systemctl is-active "docker" &>/dev/null &&
-            if [[ $portainer_stat = "none" ]]; then
-                install_portainer
+            if [[ $portiner_stat = "none" ]]; then
+                install_portiner
             else
-                uninstall_portainer
+                uninstall_portiner
             fi
         ;;
     6)
@@ -1242,7 +1242,7 @@ menu() {
         systemctl is-active "tls-shunt-proxy" &>/dev/null && info_links
         ;;
     11)
-        [ -f ${tsp_conf} ] && read -rp "Confirme se WISH atualizar o componente shunt TLS-Shunt-Proxy，(Y/N) [N]:" upgrade_mode
+        [ -f ${tsp_conf} ] && read -rp "Confirme se INGIN atualizar o componente shunt TLS-Shunt-Proxy，(Y/N) [N]:" upgrade_mode
         [[ -z ${upgrade_mode} ]] && upgrade_mode="none"
         case $upgrade_mode in
         [yY])
@@ -1255,7 +1255,7 @@ menu() {
             echo -e "${GreenBG} Pule para atualizar o componente shunt TLS-Shunt-Proxy ${Font}"
             ;;
         esac
-        [ -f ${tsp_conf} ] && read -rp "Confirme se WISH atualizar os componentes da plataforma Docker，(Y/N) [N]:" upgrade_mode
+        [ -f ${tsp_conf} ] && read -rp "Confirme se INGIN atualizar os componentes da plataforma Docker，(Y/N) [N]:" upgrade_mode
         [[ -z ${upgrade_mode} ]] && upgrade_mode="none"
         case $upgrade_mode in
         [yY])
@@ -1274,7 +1274,7 @@ menu() {
         ;;
     13)
         kernel_change="YES"
-        systemctl is-active "docker" &>/dev/null && echo -e "${RedBG} !!!Como o Docker está intimamente relacionado TO kernel do SYSTEM, alterar o kernel do SYSTEM pode fazer com que o Docker fique inutilizável!!! ${Font}\n${WARN} ${Yellow} 如果内核更换后 Docker 无法正常启动，请尝试通过 脚本 <选项10:升级 Docker> 修复 或 <选项11:完全卸载> 后重新部署 ${Font}" &&
+        systemctl is-active "docker" &>/dev/null && echo -e "${RedBG} !!!Como o Docker está intimamente relacionado ao kernel do SISTEM, MENGUBAH o kernel do SISTEM pode fazer com que o Docker fique inutilizável!!! ${Font}\n${WARN} ${Yellow} 如果内核更换后 Docker 无法正常启动，请尝试通过 脚本 <选项10:升级 Docker> 修复 或 <选项11:完全卸载> 后重新部署 ${Font}" &&
             read -rp "Depois de confirmar, digite YES (diferencia maiúsculas de minúsculas):" kernel_change
         [[ -z ${kernel_change} ]] && kernel_change="no"
         case $kernel_change in
