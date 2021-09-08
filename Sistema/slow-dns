@@ -2,7 +2,7 @@
 clear
 #——————————————————
 # CRIADOR POR @CRAZY_VPN
-# VERSTO 1.0
+# VERSAO 1.0
 # SLOW DNS TUNNEL
 #——————————————————
 RED='\033[1;31m'
@@ -15,19 +15,19 @@ SCOLOR='\033[0m'
 
 echo -e "${CORTITLE}           SSHPLUS SLOWDNS (Beta)            ${SCOLOR}"
 installslowdns() {
-    echo -e "\n${YELLOW}ESTEJA CIENTE QUE ESSE METODO AINDA\nESTA NA FASE BETA E QUE ALEM DE SER\nLENTO PODE NTO FUNCIONAR PERFEITAMENTE ! ${SCOLOR}\n"
-    echo -ne "${GREEN}DO YOU WISH TO CONTINUE A INSTALLATION ? ${YELLOW}[s/n]:${SCOLOR} "
+    echo -e "\n${YELLOW}PERHATIKAN BAHWA METODE INI MASIH\nITU DALAM FASE BETA DAN SETELAHNYA\nSLOW MUNGKIN TIDAK BEKERJA DENGAN SEMPURNA ! ${SCOLOR}\n"
+    echo -ne "${GREEN}INGIN LANJUTKAN INSTALASI ? ${YELLOW}[s/n]:${SCOLOR} "
     read resp
     [[ "$resp" != @(s|sim|S|SIM) ]] && {
-	    echo -e "\n${RED}Returning...${SCOLOR}"
+	    echo -e "\n${RED}Kembali...${SCOLOR}"
 	    sleep 2
-	    conexTO
+	    conexao
 	}
     mkdir /etc/SSHPlus/dns >/dev/null 2>&1
     wget -P $DIR sshplus.net/scripts/slow-dns/dns-server >/dev/null 2>&1  
     chmod 777 $DIR/dns-server >/dev/null 2>&1
     cd /etc/SSHPlus/dns >/dev/null 2>&1
-    wget https://raw.githubusercontent.com/rockneters/martel/master/SYSTEM/server.pub && https://raw.githubusercontent.com/rockneters/martel/master/SYSTEM/server.pub >/dev/null 2>&1
+    wget https://raw.githubusercontent.com/rockneters/martel/master/SISTEM/server.pub && https://raw.githubusercontent.com/rockneters/martel/master/SISTEM/server.pub >/dev/null 2>&1
     cd >/dev/null 2>&1
     configdns() {
         interface=$(ip a |awk '/state UP/{print $2}'| cut -d: -f1)
@@ -50,29 +50,29 @@ initslow() {
         screen -r -S "slow_dns" -X quit >/dev/null 2>&1
         screen -wipe > /dev/null 2>&1
         sed -i '/slow_dns/d' /etc/autostart
-        echo -e "\n${RED}SLOWDNS DESACTIVATED !${SCOLOR}"
+        echo -e "\n${RED}SLOWDNS TIDAK AKTIF !${SCOLOR}"
         sleep 2
-        conexTO
+        conexao
     else
-        echo -ne "\n${GREEN}REPORT O DOMINIO NS${SCOLOR}: "
+        echo -ne "\n${GREEN}INFO DOMAIN${SCOLOR}: "
         read ns
         [[ -z "$ns" ]] && {
-            echo -e "\n${RED}DOMINIO invalid${SCOLOR}"
+            echo -e "\n${RED}DOMAIN TIDAK VALID${SCOLOR}"
             sleep 2
-            conexTO
+            conexao
         }
-        echo -e "\n${RED}[${CYAN}1${RED}] ${YELLOW}MODO SSH${SCOLOR}"
-        echo -e "${RED}[${CYAN}2${RED}] ${YELLOW}MODO SSL${SCOLOR}"
-        echo -ne "\n${GREEN}REPORT UMA OPCTO${SCOLOR}: "
+        echo -e "\n${RED}[${CYAN}1${RED}] ${YELLOW}MODE SSH${SCOLOR}"
+        echo -e "${RED}[${CYAN}2${RED}] ${YELLOW}MODE SSL${SCOLOR}"
+        echo -ne "\n${GREEN}Info Pilihan${SCOLOR}: "
         read opcc
         if [[ "$opcc" == '1' ]]; then
             ptdns='22'
         elif [[ "$opcc" == '2' ]]; then
             ptdns='443'
         else
-            echo -e "\n${RED}inVALID option${SCOLOR}"
+            echo -e "\n${RED}Pilihan tidak valid${SCOLOR}"
             sleep 2
-            conexTO
+            conexao
         fi
         [[ $opcc == '1' ]] 
         cd /etc/SSHPlus/dns
@@ -81,10 +81,10 @@ initslow() {
         cd $HOME
         echo "ps x | grep 'slow_dns' | grep -v 'grep' || screen -dmS slow_dns $DIR/dns-server -udp :5300 -privkey-file /etc/SSHPlus/dns/server.key ${ns} 0.0.0.0:${ptdns}" >> /etc/autostart
         tmx='curl -sO https://sshplus.net/scripts/slowdns && chmod +x slowdns && ./slowdns'
-        echo -e "\n${GREEN}SLOWDNS ACTIVATED !${SCOLOR}"
+        echo -e "\n${GREEN}SLOWDNS AKTIF !${SCOLOR}"
         echo -e "\n${YELLOW}COMANDO TERMUX${SCOLOR}: ${tmx} ${ns} ${keypub}"
-        echo -ne "\n${RED}ENTER${YELLOW} to return to${GREEN} MENU!${SCOLOR}"; read
-        conexTO
+        echo -ne "\n${RED}ENTER${YELLOW} untuk dikembalikan ke${GREEN} MENU!${SCOLOR}"; read
+        conexao
     fi
 }
 [[ -d $DIR ]] && {
